@@ -6,7 +6,7 @@ const promptList = [{
     type: 'input',
     message: '请输入项目名称:',
     name: 'projectName',
-},{
+}, {
     type: 'input',
     message: '请输入项目全路径:',
     name: 'fullPath',
