@@ -2,6 +2,12 @@ const shell = require("shelljs");
 const fs = require("fs");
 const path = require("path");
 
+/**
+ * @description 复制文件到指定目录
+ * @param {*} source 源文件路径数组
+ * @param {*} basePath 生成文件的目录
+ * @param {*} projectName 项目名称
+ */
 function copyFile(source, basePath, projectName) {
   source.forEach((item) => {
     const lastIndex = item.split(projectName);
@@ -10,6 +16,11 @@ function copyFile(source, basePath, projectName) {
   });
 }
 
+/**
+ * @description 写入文件
+ * @param {String} filename 文件名称
+ * @param {String} content 文件内容
+ */
 function writeFile(filename, content) {
     fs.writeFile(filename, content, (err) => {
       if (err) throw err;
@@ -17,6 +28,11 @@ function writeFile(filename, content) {
     });
   }
 
+  /**
+   * @description 将对象转换为路径数组
+   * @param {*} obj 变更对象
+   * @returns 路径数组
+   */
 function convertObjToArray(obj) {
   const arr = [];
   for (const key in obj) {
@@ -25,6 +41,11 @@ function convertObjToArray(obj) {
   return arr;
 }
 
+/**
+ * @description 将svn提交记录拆分成键值对
+ * @param {Array} record svn记录
+ * @param {String} projectName 项目名称
+ */
 function splitRecord(record, projectName) {
   const recordMap = {};
   record.forEach((item) => {
@@ -48,6 +69,11 @@ function splitRecord(record, projectName) {
   copyFile(convertObjToArray(recordMap), "./new/", projectName);
 }
 
+/**
+ * @description 获取svn更新记录
+ * @param {String} basePath 项目全路径
+ * @param {String} projectName 项目名称
+ */
 function getSvnEditPath(basePath, projectName) {
   const result = shell.exec(`svn status ${basePath}`, { silent: true });
   const stdRecord = result.stdout.split("\n");
