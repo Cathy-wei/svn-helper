@@ -1,0 +1,22 @@
+{
+  "name": "svn-helper-crm",
+  "version": "1.1.4",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "crm3": "index.js"
+  },
+  "engines": {
+    "node": ">= 16.7.0"
+  },
+  "scripts": {
+    "create": "node index.js"
+  },
+  "keywords": ["svn"],
+  "author": "yunhao",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "shelljs": "^0.8.5"
+  }
+}
