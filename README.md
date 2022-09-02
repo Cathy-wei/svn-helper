@@ -1,26 +1,33 @@
 ## svn变更单处理
 
 ### 使用方法
+1.需要安装`Node16.7.0`以上版本，版本过低跑不起来
 
-1.下载安装包
+安装地址：[Node.js (nodejs.org)](https://nodejs.org/zh-cn/)
+
+2.下载安装包
 
 ```bash
 # 全局安装包
 npm install -g svn-helper-crm
 ```
 
-2.使用脚手架工具
+3.使用脚手架工具
 
 ```bash
 # 使用指令
 crm3
+
+# 根据指令提示输入
+请输入项目名称：输入你当前的项目
+请输入项目全路径：输入项目根目录所在的全路径，不是相对路径
 ```
 
 ![image-20220902163037012](https://git.poker/cloudhao1999/image-hosting/blob/master/20220902/image.6d0pav7nx4w0.webp?raw=true)
 
 `projectName`为提取变更单项目名称，`fullPath`为项目根地址全路径
 
-脚手架将在输入指令的路径新建`record.json`文件，`M`为变更文件路径，`A`为新增文件路径
+脚手架将在输入指令的目录下新建`record.json`文件，`M`为变更文件路径，`A`为新增文件路径
 
 ```json
 {
