@@ -1,7 +1,7 @@
 {
   "name": "svn-helper-crm",
-  "version": "1.1.4",
-  "description": "",
+  "version": "1.1.6",
+  "description": "svn record helper",
   "main": "index.js",
   "bin": {
     "crm3": "index.js"
@@ -15,6 +15,7 @@
   "keywords": ["svn"],
   "author": "yunhao",
   "license": "ISC",
+  "repository": "cloudhao1999/svn-helper",
   "dependencies": {
     "inquirer": "^8.0.0",
     "shelljs": "^0.8.5"
