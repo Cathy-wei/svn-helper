@@ -28,11 +28,19 @@ function writeFile(filename, content) {
     });
 }
 
+<<<<<<< HEAD
 /**
  * @description 将对象转换为路径数组
  * @param {*} obj 变更对象
  * @returns 路径数组
  */
+=======
+  /**
+   * @description 将对象转换为路径数组
+   * @param {*} obj 变更对象
+   * @returns 路径数组
+   */
+>>>>>>> chore: 增加注释
 function convertObjToArray(obj) {
     const arr = [];
     for (const key in obj) {
@@ -46,6 +54,7 @@ function convertObjToArray(obj) {
  * @param {Array} record svn记录
  * @param {String} projectName 项目名称
  */
+<<<<<<< HEAD
 function splitRecord(record, basePath, svnPath) {
     const statusType = {
         // " ": "无修改",
@@ -59,6 +68,17 @@ function splitRecord(record, basePath, svnPath) {
         // "?": "未纳入版本控制",
         "!": "该项目已遗失(被非 svn 命令删除)或不完整",
         "~": "版本控制下的项目与其它类型的项目重名",
+=======
+function splitRecord(record, projectName) {
+  const recordMap = {};
+  record.forEach((item) => {
+    const key = item.split("")[0];
+    const path = item.split("       ")[1];
+    if (recordMap[key]) {
+      recordMap[key].push(path);
+    } else {
+      recordMap[key] = [path];
+>>>>>>> chore: 增加注释
     }
     const recordMap = {};
     record.forEach((item) => {
@@ -96,12 +116,21 @@ function splitRecord(record, basePath, svnPath) {
  * @param {String} basePath 项目全路径
  * @param {String} projectName 项目名称
  */
+<<<<<<< HEAD
 function getSvnEditPath(basePath, projectName, svnPath) {
     const result = shell.exec(`svn status ${basePath}`, { silent: true });
     const stdRecord = result.stdout.split("\n");
     if (Array.isArray(stdRecord)) {
         splitRecord(stdRecord, basePath, svnPath);
     }
+=======
+function getSvnEditPath(basePath, projectName) {
+  const result = shell.exec(`svn status ${basePath}`, { silent: true });
+  const stdRecord = result.stdout.split("\n");
+  if (Array.isArray(stdRecord)) {
+    splitRecord(stdRecord, projectName);
+  }
+>>>>>>> chore: 增加注释
 }
 
 module.exports = {
