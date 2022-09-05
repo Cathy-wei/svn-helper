@@ -29,11 +29,15 @@ function writeFile(filename, content) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> windows 适配优化
 /**
  * @description 将对象转换为路径数组
  * @param {*} obj 变更对象
  * @returns 路径数组
  */
+<<<<<<< HEAD
 =======
   /**
    * @description 将对象转换为路径数组
@@ -41,6 +45,8 @@ function writeFile(filename, content) {
    * @returns 路径数组
    */
 >>>>>>> chore: 增加注释
+=======
+>>>>>>> windows 适配优化
 function convertObjToArray(obj) {
     const arr = [];
     for (const key in obj) {
@@ -55,6 +61,9 @@ function convertObjToArray(obj) {
  * @param {String} projectName 项目名称
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> windows 适配优化
 function splitRecord(record, basePath, svnPath) {
     const statusType = {
         // " ": "无修改",
@@ -68,6 +77,7 @@ function splitRecord(record, basePath, svnPath) {
         // "?": "未纳入版本控制",
         "!": "该项目已遗失(被非 svn 命令删除)或不完整",
         "~": "版本控制下的项目与其它类型的项目重名",
+<<<<<<< HEAD
 =======
 function splitRecord(record, projectName) {
   const recordMap = {};
@@ -79,6 +89,8 @@ function splitRecord(record, projectName) {
     } else {
       recordMap[key] = [path];
 >>>>>>> chore: 增加注释
+=======
+>>>>>>> windows 适配优化
     }
     const recordMap = {};
     record.forEach((item) => {
@@ -95,6 +107,7 @@ function splitRecord(record, projectName) {
                     recordMap[key] = [path];
                 }
             }
+<<<<<<< HEAD
 
         }
     });
@@ -104,6 +117,17 @@ function splitRecord(record, projectName) {
     delete recordMap[" "];
     delete recordMap["undefined"];
 
+=======
+
+        }
+    });
+
+    // 删除不需要的文件记录
+    delete recordMap["?"];
+    delete recordMap[" "];
+    delete recordMap["undefined"];
+
+>>>>>>> windows 适配优化
     // 生成修改新增记录到文件中
     const fileStr = JSON.stringify(recordMap, null, 2).replace(/\\\\/g, "\/").replace(/\\r/g, "");
     writeFile("record.json", fileStr);
@@ -117,12 +141,16 @@ function splitRecord(record, projectName) {
  * @param {String} projectName 项目名称
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> windows 适配优化
 function getSvnEditPath(basePath, projectName, svnPath) {
     const result = shell.exec(`svn status ${basePath}`, { silent: true });
     const stdRecord = result.stdout.split("\n");
     if (Array.isArray(stdRecord)) {
         splitRecord(stdRecord, basePath, svnPath);
     }
+<<<<<<< HEAD
 =======
 function getSvnEditPath(basePath, projectName) {
   const result = shell.exec(`svn status ${basePath}`, { silent: true });
@@ -131,6 +159,8 @@ function getSvnEditPath(basePath, projectName) {
     splitRecord(stdRecord, projectName);
   }
 >>>>>>> chore: 增加注释
+=======
+>>>>>>> windows 适配优化
 }
 
 module.exports = {
