@@ -1,6 +1,17 @@
-import shell from "shelljs";
-import fs from "fs";
-import path from "path";
+#! /usr/bin/env node
+'use strict';
+
+var shell = require('shelljs');
+var fs = require('fs');
+var path = require('path');
+var inquirer = require('inquirer');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var shell__default = /*#__PURE__*/_interopDefaultLegacy(shell);
+var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+var inquirer__default = /*#__PURE__*/_interopDefaultLegacy(inquirer);
 
 /**
  * @description 复制文件到指定目录
@@ -11,8 +22,8 @@ import path from "path";
 function copyFile(source, basePath, projectName) {
   source.forEach((item) => {
     const lastIndex = item.split(projectName);
-    const dest = path.resolve(process.cwd(), basePath + projectName + lastIndex[1]);
-    fs.cp(item, dest, { recursive: true }, (err) => {});
+    const dest = path__default["default"].resolve(process.cwd(), basePath + projectName + lastIndex[1]);
+    fs__default["default"].cp(item, dest, { recursive: true }, (err) => {});
   });
 }
 
@@ -22,7 +33,7 @@ function copyFile(source, basePath, projectName) {
  * @param {String} content 文件内容
  */
 function writeFile(filename, content) {
-    fs.writeFile(filename, content, (err) => {
+    fs__default["default"].writeFile(filename, content, (err) => {
       if (err) throw err;
       console.log("The file has been saved!");
     });
@@ -74,10 +85,27 @@ function splitRecord(record, projectName) {
  * @param {String} basePath 项目全路径
  * @param {String} projectName 项目名称
  */
-export function getSvnEditPath(basePath, projectName) {
-  const result = shell.exec(`svn status ${basePath}`, { silent: true });
+function getSvnEditPath(basePath, projectName) {
+  const result = shell__default["default"].exec(`svn status ${basePath}`, { silent: true });
   const stdRecord = result.stdout.split("\n");
   if (Array.isArray(stdRecord)) {
     splitRecord(stdRecord, projectName);
   }
 }
+
+const promptList = [{
+    type: 'input',
+    message: '请输入项目名称:',
+    name: 'projectName',
+},{
+    type: 'input',
+    message: '请输入项目全路径:',
+    name: 'fullPath',
+}];
+
+inquirer__default["default"].prompt(promptList).then(answers => {
+    console.log(answers); // 返回的结果
+    if (answers.projectName && answers.fullPath) {
+        getSvnEditPath(answers.fullPath, answers.projectName);
+    }
+});

@@ -1,23 +1,31 @@
 {
   "name": "svn-helper-crm",
-  "version": "1.1.6",
+  "version": "2.0.0",
   "description": "svn record helper",
   "main": "index.js",
   "bin": {
-    "crm3": "index.js"
+    "crm3": "bin/index.js"
   },
   "engines": {
     "node": ">= 16.7.0"
   },
   "scripts": {
-    "create": "node index.js"
+    "create": "node index.js",
+    "build": "rollup -c"
   },
-  "keywords": ["svn"],
+  "keywords": [
+    "svn"
+  ],
   "author": "yunhao",
   "license": "ISC",
   "repository": "cloudhao1999/svn-helper",
   "dependencies": {
     "inquirer": "^8.0.0",
     "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-json": "^4.1.0",
+    "rollup": "^2.79.0"
   }
 }

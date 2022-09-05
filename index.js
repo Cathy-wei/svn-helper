@@ -1,7 +1,5 @@
-#! /usr/bin/env node
-
-const { getSvnEditPath } = require('./util')
-const inquirer = require('inquirer');
+import { getSvnEditPath } from './util'
+import inquirer from 'inquirer'
 
 const promptList = [{
     type: 'input',
