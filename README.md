@@ -30,15 +30,10 @@ crm3
 ```json
 {
   "M": [
-    "/Users/cloudhao/Documents/workspace/Work/Project/pom.xml",
-    "/Users/cloudhao/Documents/workspace/Work/Project/src/main/java/com/company/xxx/analy/controller/MainController.java"
+    // 修改文件路径
   ],
   "A": [
-  "/Users/cloudhao/Documents/workspace/Work/Project/src/main/java/com/company/xxx/analy/fragment/BctionDetailHistory.java",
-    "/Users/cloudhao/Documents/workspace/Work/Project/src/main/java/com/company/xxx/analy/fragment/AolisticCostView.java",
-    "/Users/cloudhao/Documents/workspace/Work/Project/src/main/java/com/company/xxx/analy/fragment/bctionDetailHistory-tpl.html",
-    "/Users/cloudhao/Documents/workspace/Work/Project/src/main/java/com/company/xxx/bita/plugs/moment.min.js",
-    "/Users/cloudhao/Documents/workspace/Work/Project/src/main/java/com/company/xxx/bita/plugs/vue2.js"
+    // 新增文件路径
   ]
 }
 ```
