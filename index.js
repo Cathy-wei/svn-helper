@@ -1,4 +1,5 @@
-import { getSvnEditPath } from './util'
+import { getSvnEditPath } from './utils/core'
+import { getPlatform } from './utils/platform'
 import inquirer from 'inquirer'
 
 const promptList = [{
@@ -11,6 +12,7 @@ const promptList = [{
     name: 'fullPath',
 }];
 
+console.log(getPlatform());
 inquirer.prompt(promptList).then(answers => {
     console.log(answers); // 返回的结果
     if (answers.projectName && answers.fullPath) {

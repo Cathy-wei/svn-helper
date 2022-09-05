@@ -20,11 +20,12 @@ var inquirer__default = /*#__PURE__*/_interopDefaultLegacy(inquirer);
  * @param {*} projectName 项目名称
  */
 function copyFile(source, basePath, projectName) {
-  source.forEach((item) => {
-    const lastIndex = item.split(projectName);
-    const dest = path__default["default"].resolve(process.cwd(), basePath + projectName + lastIndex[1]);
-    fs__default["default"].cp(item, dest, { recursive: true }, (err) => {});
-  });
+    source.forEach((item) => {
+        const lastIndex = item.split(projectName);
+        const dest = path__default["default"].resolve(process.cwd(), basePath + projectName + lastIndex[1]);
+        fs__default["default"].cp(item, dest, {recursive: true}, (err) => {
+        });
+    });
 }
 
 /**
@@ -34,16 +35,16 @@ function copyFile(source, basePath, projectName) {
  */
 function writeFile(filename, content) {
     fs__default["default"].writeFile(filename, content, (err) => {
-      if (err) throw err;
-      console.log("The file has been saved!");
+        if (err) throw err;
+        console.log("The file has been saved!");
     });
-  }
+}
 
-  /**
-   * @description 将对象转换为路径数组
-   * @param {*} obj 变更对象
-   * @returns 路径数组
-   */
+/**
+ * @description 将对象转换为路径数组
+ * @param {*} obj 变更对象
+ * @returns 路径数组
+ */
 function convertObjToArray(obj) {
   const arr = [];
   for (const key in obj) {
@@ -93,6 +94,19 @@ function getSvnEditPath(basePath, projectName) {
   }
 }
 
+/**
+ * @description 获取平台信息
+ * @returns 平台信息
+ */
+function getPlatform() {
+    const platform = process.platform;
+    if (platform === "darwin") {
+        return "mac";
+    } else if (platform === "win32") {
+        return "windows";
+    }
+}
+
 const promptList = [{
     type: 'input',
     message: '请输入项目名称:',
@@ -103,6 +117,7 @@ const promptList = [{
     name: 'fullPath',
 }];
 
+console.log(getPlatform());
 inquirer__default["default"].prompt(promptList).then(answers => {
     console.log(answers); // 返回的结果
     if (answers.projectName && answers.fullPath) {

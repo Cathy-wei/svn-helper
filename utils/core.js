@@ -1,45 +1,6 @@
 import shell from "shelljs";
-import fs from "fs";
-import path from "path";
-
-/**
- * @description 复制文件到指定目录
- * @param {*} source 源文件路径数组
- * @param {*} basePath 生成文件的目录
- * @param {*} projectName 项目名称
- */
-function copyFile(source, basePath, projectName) {
-  source.forEach((item) => {
-    const lastIndex = item.split(projectName);
-    const dest = path.resolve(process.cwd(), basePath + projectName + lastIndex[1]);
-    fs.cp(item, dest, { recursive: true }, (err) => {});
-  });
-}
-
-/**
- * @description 写入文件
- * @param {String} filename 文件名称
- * @param {String} content 文件内容
- */
-function writeFile(filename, content) {
-    fs.writeFile(filename, content, (err) => {
-      if (err) throw err;
-      console.log("The file has been saved!");
-    });
-  }
-
-  /**
-   * @description 将对象转换为路径数组
-   * @param {*} obj 变更对象
-   * @returns 路径数组
-   */
-function convertObjToArray(obj) {
-  const arr = [];
-  for (const key in obj) {
-    arr.push(...obj[key]);
-  }
-  return arr;
-}
+import { copyFile, writeFile } from "./file";
+import { convertObjToArray } from "./transform"
 
 /**
  * @description 将svn提交记录拆分成键值对

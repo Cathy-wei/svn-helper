@@ -1,6 +1,6 @@
 {
   "name": "svn-helper-crm",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "svn record helper",
   "main": "index.js",
   "bin": {
@@ -10,7 +10,8 @@
     "node": ">= 16.7.0"
   },
   "scripts": {
-    "create": "node index.js",
+    "dev": "node ./bin/index.js",
+    "watch": "rollup -c -w",
     "build": "rollup -c"
   },
   "keywords": [
