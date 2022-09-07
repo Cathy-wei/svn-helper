@@ -16,8 +16,7 @@
     "watch": "rollup -c -w",
     "build": "rollup -c",
     "prettier": "prettier --write .",
-    "prepare": "husky install",
-    "staged": "lint-staged"
+    "prepare": "husky install"
   },
   "keywords": [
     "svn"
@@ -46,7 +45,7 @@
     }
   },
   "lint-staged": {
-    "*.{mjs,js}": [
+    "*.{mjs}": [
       "prettier --write"
     ]
   }
