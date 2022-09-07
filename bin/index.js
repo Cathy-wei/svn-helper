@@ -1,8 +1,8 @@
 #! /usr/bin/env node
-import shell from 'shelljs';
-import fs from 'fs';
-import path from 'path';
-import inquirer from 'inquirer';
+import shell from "shelljs";
+import fs from "fs";
+import path from "path";
+import inquirer from "inquirer";
 
 /**
  * @description 复制文件到指定目录
@@ -13,10 +13,7 @@ import inquirer from 'inquirer';
 function copyFile(source, basePath, projectName) {
   source.forEach((item) => {
     const lastIndex = item.split(projectName);
-    const dest = path.resolve(
-      process.cwd(),
-      basePath + projectName + lastIndex[1]
-    );
+    const dest = path.resolve(process.cwd(), basePath + projectName + lastIndex[1]);
     fs.cp(item, dest, { recursive: true }, (err) => {});
   });
 }
@@ -65,7 +62,7 @@ function splitRecord(record, projectName, basePath, svnPath) {
     X: "未纳入版本控制的目录,被外部引用的目录所创建",
     // "?": "未纳入版本控制",
     "!": "该项目已遗失(被非 svn 命令删除)或不完整",
-    "~": "版本控制下的项目与其它类型的项目重名",
+    "~": "版本控制下的项目与其它类型的项目重名"
   };
   const recordMap = {};
   const recordFileMap = {};
@@ -93,9 +90,7 @@ function splitRecord(record, projectName, basePath, svnPath) {
   delete recordMap["undefined"];
 
   // 生成修改新增记录到文件中
-  const fileStr = JSON.stringify(recordMap, null, 2)
-    .replace(/\\\\/g, "/")
-    .replace(/\\r/g, "");
+  const fileStr = JSON.stringify(recordMap, null, 2).replace(/\\\\/g, "/").replace(/\\r/g, "");
   writeFile("record.json", fileStr);
   // 复制文件到指定目录
   copyFile(convertObjToArray(recordFileMap), "./new/", projectName);
@@ -132,18 +127,18 @@ const promptList = [
   {
     type: "input",
     message: "请输入项目名称:",
-    name: "projectName",
+    name: "projectName"
   },
   {
     type: "input",
     message: "请输入项目本地路径:",
-    name: "fullPath",
+    name: "fullPath"
   },
   {
     type: "input",
     message: "请输入项目SVN路径:",
-    name: "svnPath",
-  },
+    name: "svnPath"
+  }
 ];
 
 console.log(getPlatform());

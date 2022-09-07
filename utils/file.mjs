@@ -10,10 +10,7 @@ import path from "path";
 export function copyFile(source, basePath, projectName) {
   source.forEach((item) => {
     const lastIndex = item.split(projectName);
-    const dest = path.resolve(
-      process.cwd(),
-      basePath + projectName + lastIndex[1]
-    );
+    const dest = path.resolve(process.cwd(), basePath + projectName + lastIndex[1]);
     fs.cp(item, dest, { recursive: true }, (err) => {});
   });
 }

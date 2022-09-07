@@ -1,16 +1,16 @@
-import pkg from "./package.json"
+import pkg from "./package.json";
 import commonjs from "@rollup/plugin-commonjs";
-import json from '@rollup/plugin-json';
+import json from "@rollup/plugin-json";
 
 export default {
-    input: "index.mjs",
-    output: [
-        {
-            file: 'bin/' + pkg.main,
-            format: "esm",
-            banner: '#! /usr/bin/env node',
-        }
-    ],
-    external: [pkg.peerDependencies, pkg.dependencies],
-    plugins: [ commonjs(), json()],
-}
+  input: "index.mjs",
+  output: [
+    {
+      file: "bin/" + pkg.main,
+      format: "esm",
+      banner: "#! /usr/bin/env node"
+    }
+  ],
+  external: [pkg.peerDependencies, pkg.dependencies],
+  plugins: [commonjs(), json()]
+};
