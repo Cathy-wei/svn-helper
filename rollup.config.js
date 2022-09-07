@@ -3,11 +3,11 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from '@rollup/plugin-json';
 
 export default {
-    input: "index.js",
+    input: "index.mjs",
     output: [
         {
             file: 'bin/' + pkg.main,
-            format: "cjs",
+            format: "esm",
             banner: '#! /usr/bin/env node',
         }
     ],
