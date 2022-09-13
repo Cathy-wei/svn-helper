@@ -35,7 +35,6 @@ function splitRecord(record, projectName, basePath, svnPath) {
       const recordFileMap = {};
       answers.fileList?.forEach((item) => {
         const key = statusType[item[0]];
-        // const key = item[0];
         const emptyKey = /\s/.test(key);
         const index = item.indexOf(basePath);
         const filePath = item.substring(index);
@@ -51,11 +50,10 @@ function splitRecord(record, projectName, basePath, svnPath) {
         }
       });
 
-      // 删除不需要的文件记录
-      delete recordMap["?"];
-      delete recordMap[" "];
-      delete recordMap["undefined"];
-      delete recordFileMap["undefined"];
+      // 删除不需要输出的json输出
+      ["", "undefined"].forEach((key) => delete recordFileMap[key]);
+      // 删除不需要的拷贝的文件路径
+      ["删除", "忽略", "", "undefined"].forEach((key) => delete recordFileMap[key]);
 
       // 生成修改新增记录到文件中
       const fileStr = JSON.stringify(recordMap, null, 2).replace(/\\\\/g, "/").replace(/\\r/g, "");
@@ -73,9 +71,9 @@ function splitRecord(record, projectName, basePath, svnPath) {
  * @param {String} svnPath SVN路径前缀
  */
 export function getSvnEditPath(basePath, projectName, svnPath) {
-    const result = shell.exec(`svn status ${basePath}`, { silent: true });
-    const stdRecord = result.stdout.split("\n");
-    if (Array.isArray(stdRecord)) {
-        splitRecord(stdRecord, projectName, basePath, svnPath);
-    }
+  const result = shell.exec(`svn status ${basePath}`, { silent: true });
+  const stdRecord = result.stdout.split("\n");
+  if (Array.isArray(stdRecord)) {
+    splitRecord(stdRecord, projectName, basePath, svnPath);
+  }
 }
