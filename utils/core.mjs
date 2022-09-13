@@ -1,6 +1,7 @@
 import shell from "shelljs";
 import { copyFile, writeFile } from "./file.mjs";
 import { convertObjToArray } from "./transform.mjs";
+import inquirer from "inquirer";
 
 /**
  * @description 将svn提交记录拆分成键值对
@@ -23,9 +24,16 @@ function splitRecord(record, projectName, basePath, svnPath) {
         "!": "该项目已遗失(被非 svn 命令删除)或不完整",
         "~": "版本控制下的项目与其它类型的项目重名"
     };
-    const recordMap = {};
-    const recordFileMap = {};
-    record.forEach((item) => {
+    const choice=[{
+        type:'checkbox',
+        name:'fileList',
+        message:'请选择需要提交的项目',
+        choices:record,
+      }];
+    inquirer.prompt(choice).then((answers) => {
+      const recordMap = {};
+      const recordFileMap = {};
+      answers.fileList?.forEach((item) => {
         const key = statusType[item[0]];
         // const key = item[0];
         const emptyKey = /\s/.test(key);
@@ -33,27 +41,29 @@ function splitRecord(record, projectName, basePath, svnPath) {
         const filePath = item.substring(index);
         const path = item.substring(index).replace(basePath, svnPath);
         if (!emptyKey && path) {
-            if (recordMap[key]) {
-                recordMap[key].push(path);
-                recordFileMap[key].push(filePath);
-            } else {
-                recordMap[key] = [path];
-                recordFileMap[key] = [filePath];
-            }
+          if (recordMap[key]) {
+            recordMap[key].push(path);
+            recordFileMap[key].push(filePath);
+          } else {
+            recordMap[key] = [path];
+            recordFileMap[key] = [filePath];
+          }
         }
-    });
+      });
 
-    // 删除不需要的文件记录
-    delete recordMap["?"];
-    delete recordMap[" "];
-    delete recordMap["undefined"];
-    delete recordFileMap["undefined"];
+      // 删除不需要的文件记录
+      delete recordMap["?"];
+      delete recordMap[" "];
+      delete recordMap["undefined"];
+      delete recordFileMap["undefined"];
 
-    // 生成修改新增记录到文件中
-    const fileStr = JSON.stringify(recordMap, null, 2).replace(/\\\\/g, "/").replace(/\\r/g, "");
-    writeFile("record.json", fileStr);
-    // 复制文件到指定目录
-    copyFile(convertObjToArray(recordFileMap), "./new/", projectName);
+      // 生成修改新增记录到文件中
+      const fileStr = JSON.stringify(recordMap, null, 2).replace(/\\\\/g, "/").replace(/\\r/g, "");
+      writeFile("record.json", fileStr);
+      // 复制文件到指定目录
+      copyFile(convertObjToArray(recordFileMap), "./new/", projectName);
+    })
+
 }
 
 /**

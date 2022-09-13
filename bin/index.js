@@ -2,7 +2,7 @@
 import shell from 'shelljs';
 import fs from 'fs';
 import path from 'path';
-import inquirer from 'inquirer';
+import 'inquirer';
 
 /**
  * @description 复制文件到指定目录
@@ -69,9 +69,16 @@ function splitRecord(record, projectName, basePath, svnPath) {
         "!": "该项目已遗失(被非 svn 命令删除)或不完整",
         "~": "版本控制下的项目与其它类型的项目重名"
     };
-    const recordMap = {};
-    const recordFileMap = {};
-    record.forEach((item) => {
+    const choice=[{
+        type:'checkbox',
+        name:'fileList',
+        message:'请选择需要提交的项目',
+        choices:record,
+      }];
+    inquirer.prompt(choice).then((answers) => {
+      const recordMap = {};
+      const recordFileMap = {};
+      answers.fileList?.forEach((item) => {
         const key = statusType[item[0]];
         // const key = item[0];
         const emptyKey = /\s/.test(key);
@@ -79,27 +86,29 @@ function splitRecord(record, projectName, basePath, svnPath) {
         const filePath = item.substring(index);
         const path = item.substring(index).replace(basePath, svnPath);
         if (!emptyKey && path) {
-            if (recordMap[key]) {
-                recordMap[key].push(path);
-                recordFileMap[key].push(filePath);
-            } else {
-                recordMap[key] = [path];
-                recordFileMap[key] = [filePath];
-            }
+          if (recordMap[key]) {
+            recordMap[key].push(path);
+            recordFileMap[key].push(filePath);
+          } else {
+            recordMap[key] = [path];
+            recordFileMap[key] = [filePath];
+          }
         }
+      });
+
+      // 删除不需要的文件记录
+      delete recordMap["?"];
+      delete recordMap[" "];
+      delete recordMap["undefined"];
+      delete recordFileMap["undefined"];
+
+      // 生成修改新增记录到文件中
+      const fileStr = JSON.stringify(recordMap, null, 2).replace(/\\\\/g, "/").replace(/\\r/g, "");
+      writeFile("record.json", fileStr);
+      // 复制文件到指定目录
+      copyFile(convertObjToArray(recordFileMap), "./new/", projectName);
     });
 
-    // 删除不需要的文件记录
-    delete recordMap["?"];
-    delete recordMap[" "];
-    delete recordMap["undefined"];
-    delete recordFileMap["undefined"];
-
-    // 生成修改新增记录到文件中
-    const fileStr = JSON.stringify(recordMap, null, 2).replace(/\\\\/g, "/").replace(/\\r/g, "");
-    writeFile("record.json", fileStr);
-    // 复制文件到指定目录
-    copyFile(convertObjToArray(recordFileMap), "./new/", projectName);
 }
 
 /**
@@ -116,41 +125,11 @@ function getSvnEditPath(basePath, projectName, svnPath) {
     }
 }
 
-/**
- * @description 获取平台信息
- * @returns 平台信息
- */
-function getPlatform() {
-  const platform = process.platform;
-  if (platform === "darwin") {
-    return "mac";
-  } else if (platform === "win32") {
-    return "windows";
-  }
-}
-
-const promptList = [{
-        type: "input",
-        message: "请输入项目名称:",
-        name: "projectName"
-    },
-    {
-        type: "input",
-        message: "请输入项目本地路径:",
-        name: "fullPath"
-    },
-    {
-        type: "input",
-        message: "请输入项目SVN路径:",
-        name: "svnPath"
-    }
-];
-
-console.log(getPlatform());
-inquirer.prompt(promptList).then((answers) => {
-    console.log(answers); // 返回的结果
-    if (answers.projectName && answers.fullPath && answers.svnPath) {
-        getSvnEditPath(answers.fullPath, answers.projectName, answers.svnPath);
-    }
-});
-// getSvnEditPath("E:\\vueProj\\ruleProj2022", "ruleProj2022", "rule/unified-rule-platform/rule-mng-web");
+// console.log(getPlatform());
+// inquirer.prompt(promptList).then((answers) => {
+//     console.log(answers); // 返回的结果
+//     if (answers.projectName && answers.fullPath && answers.svnPath) {
+//         getSvnEditPath(answers.fullPath, answers.projectName, answers.svnPath);
+//     }
+// });
+getSvnEditPath("E:\\vueProj\\ruleProj2022", "ruleProj2022", "rule/unified-rule-platform/rule-mng-web");
