@@ -7,17 +7,17 @@ import path from "path";
  * @param {*} basePath 生成文件的目录
  * @param {*} projectName 项目名称
  */
-export function copyFile(source, basePath, projectName) {
-    source.forEach((item) => {
-        item = item.split("\r")[0];
-        const lastIndex = item.split(projectName);
-        const dest = path.resolve(process.cwd(), basePath + projectName + lastIndex[1]);
-        if (fs.existsSync(item)) {
-            fs.cp(item, dest, { recursive: true }, (err) => {
-                console.log(err, item, dest);
-            });
-        }
-    });
+export function copyFile(source, basePath, projectName, svnPath) {
+  source.forEach((item) => {
+    item = item.split("\r")[0];
+    const lastIndex = item.split(projectName);
+    const dest = path.resolve(process.cwd(), basePath + svnPath + lastIndex[1]);
+    if (fs.existsSync(item)) {
+      fs.cp(item, dest, { recursive: true }, (err) => {
+        console.log(err, item, dest);
+      });
+    }
+  });
 }
 
 /**
@@ -26,8 +26,8 @@ export function copyFile(source, basePath, projectName) {
  * @param {String} content 文件内容
  */
 export function writeFile(filename, content) {
-    fs.writeFile(filename, content, (err) => {
-        if (err) throw err;
-        console.log("The file has been saved!");
-    });
+  fs.writeFile(filename, content, (err) => {
+    if (err) throw err;
+    console.log("The file has been saved!");
+  });
 }
